@@ -3,9 +3,6 @@
 
 DOCUMENTATION = '''
 ---
-# If a key doesn't apply to your module (ex: choices, default, or
-# aliases) you can use the word 'null', or an empty list, [], where
-# appropriate.
 module: idcf_dns_zone_facts
 short_description: Retrieves IDCF-cloud DNS zones
 version_added: "2.1"
