@@ -41,11 +41,12 @@ from base64 import b64encode
 from httplib import HTTPSConnection
 
 
-class IDCFClient(object):
+class IDCFAPiClient(object):
     """IDCF-cloud DNS service API client
     """
     HOSTNAME = 'dns.idcfcloud.com'
     BASE_PATH = '/api/v1'
+    DEFAULT_EXPIRES = 60
 
     def __init__(self, api_key, secret_key):
         self.api_key = api_key
@@ -68,9 +69,12 @@ class IDCFClient(object):
             'X-IDCF-Signature': signature,
         }
         conn = HTTPSConnection(self.HOSTNAME)
-        conn.request(method, path, headers=headers)
-        resp = conn.getresponse()
-        return json.loads(resp.read())
+        if data is None:
+            conn.request(method, path, headers=headers)
+        else:
+            headers['Content-Type'] = 'application/json'
+            conn.request(method, path, body=json.dumps(data), headers=headers)
+        return conn.getresponse()
 
 
 def main():
@@ -85,9 +89,9 @@ def main():
     }
     module = AnsibleModule(argument_spec=argument_spec)
     # Proceed
-    client = IDCFClient(module.params['idcf_api_key'], module.params['idcf_secret_key'])
-    zones = client.request('GET', '/zones')
-    module.exit_json(changed=False, zones=zones)
+    client = IDCFAPiClient(module.params['idcf_api_key'], module.params['idcf_secret_key'])
+    resp = client.request('GET', '/zones')
+    module.exit_json(changed=False, zones=json.loads(resp.read()))
 
 
 from ansible.module_utils.docker_common import *
