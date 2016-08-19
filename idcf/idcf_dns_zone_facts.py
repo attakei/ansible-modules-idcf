@@ -94,7 +94,7 @@ def main():
     module.exit_json(changed=False, zones=json.loads(resp.read()))
 
 
-from ansible.module_utils.docker_common import *
+from ansible.module_utils.basic import *
 
 
 if __name__ == '__main__':

@@ -143,7 +143,7 @@ def main():
     module.fail_json(msg='Fatal error')
 
 
-from ansible.module_utils.docker_common import *
+from ansible.module_utils.basic import *
 
 
 if __name__ == '__main__':
