@@ -124,8 +124,12 @@ def main():
             record = record_
             break
 
+    # No action
+    if record is None and module.params['state'] == 'absent':
+        module.exit_json(changed=False, zone={}, msg='Record is not already exists.')
+
     # Create new record
-    if record is None:
+    if record is None and module.params['state'] == 'present':
         payload = {
             'name': record_domain,
             'type': module.params['type'],
@@ -137,12 +141,30 @@ def main():
             module.fail_json(status_code=resp.status, msg=resp.reason)
         module.exit_json(changed=True, record=json.loads(resp.read()))
 
-    # Update current record
-    if record is not None:
-        pass
+    # Updade record if params is changed
+    if record is not None and module.params['state'] == 'present':
+        record_url = '{}/{}'.format(records_url, record['uuid'])
+        payload = {}
+        if module.params['content'] != record['content']:
+            payload['content'] = module.params['content']
+        if len(payload) == 0:
+            # Not changed
+            module.exit_json(changed=False, zone=zone, msg='Not changed')
+        resp = client.request('PUT', record_url, data=payload)
+        if resp.status != 200:
+            module.fail_json(status_code=resp.status, msg=resp.reason)
+        module.exit_json(changed=True, zone=json.loads(resp.read()))
+
+    # Delete current record
+    if record is not None and module.params['state'] == 'absent':
+        record_url = '{}/{}'.format(records_url, record['uuid'])
+        resp = client.request('DELETE', record_url)
+        if resp.status != 200:
+            module.fail_json(status_code=resp.status, msg=resp.reason)
+        module.exit_json(changed=True, record=json.loads(resp.read()))
 
     # Others
-    module.fail_json(msg='Fatal error')
+    module.fail_json(msg='Fatal error', xxx=record)
 
 
 from ansible.module_utils.basic import *

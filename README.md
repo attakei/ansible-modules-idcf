@@ -9,6 +9,7 @@ Ansible modules for IDCF-cloud API operations
 ## Includes
 
 * DNS
+    * Manage DNS zone and record
 
 ## See
 
