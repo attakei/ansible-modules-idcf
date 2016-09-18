@@ -107,6 +107,10 @@ def main():
     client = IDCFAPiClient(module.params['idcf_api_key'], module.params['idcf_secret_key'])
     zone = fetch_zone(client, module.params['zone'])
 
+    if module.params['type'] not in ('A', ):
+        module.fail_json(
+            msg='"{}" type is not supported.'.format(module.params['type'])
+        )
     # No action
     if zone is None:
         module.fail_json(msg='Zone is not found')
