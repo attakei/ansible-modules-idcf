@@ -118,10 +118,7 @@ def main():
     records_url = '/zones/{}/records'.format(zone['uuid'])
     resp = client.request('GET', records_url)
     zone_detail = json.loads(resp.read())
-    if module.params['name'] == '@':
-        record_domain = module.params['zone']
-    else:
-        record_domain = '{}.{}'.format(module.params['name'], module.params['zone'])
+    record_domain = '{}.{}'.format(module.params['name'], module.params['zone'])
     record = None
     for record_ in zone_detail:
         if record_['name'] == record_domain and record_['type'] == module.params['type']:
