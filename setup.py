@@ -15,7 +15,7 @@ setup(
     version="0.0.1",
 
     description="Ansible modules for IDCF-cloud",
-    long_description=open(os.path.join(here, "README.md")).read(),
+    long_description=open(os.path.join(here, "README.rst")).read(),
     license="GPLv3",
     url="https://github.com/attakei/ansible-modules-idcf",
 
