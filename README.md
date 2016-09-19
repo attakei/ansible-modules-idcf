@@ -4,7 +4,9 @@ Ansible modules for IDCF-cloud API operations
 
 ## Install
 
-(under construction)
+```
+$ pip install https://github.com/attakei/ansible-modules-idcf/archive/master.zip
+```
 
 ## Includes
 
