@@ -16,7 +16,7 @@ import idcf
 
 
 setup(
-    name="ansible-modules-idcf",
+    name="ansible-modules-idcf-dns",
     version=idcf.__version__,
 
     description=idcf.__doc__,
@@ -25,6 +25,7 @@ setup(
     url="https://github.com/attakei/ansible-modules-idcf",
 
     author="kAZUYA tAKEI",
+    author_email="attakei@gmail.com",
 
     classifiers=[
         "Development Status :: 3 - Alpha",

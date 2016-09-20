@@ -1,5 +1,5 @@
-ansible-modules-idcf
-====================
+ansible-modules-idcf-dns
+========================
 
 Ansible modules for IDCF-cloud API operations
 
@@ -9,7 +9,7 @@ Install
 
 .. code-block::
 
-   $ pip install https://github.com/attakei/ansible-modules-idcf/archive/master.zip
+   $ pip install ansible-modules-idcf-dns
 
 
 Includes
