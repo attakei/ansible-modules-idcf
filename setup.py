@@ -35,7 +35,13 @@ setup(
         "Programming Language :: Python :: 2.7",
     ],
 
-    package_dir={'ansible.modules.idcf': 'idcf'},
-    packages=['ansible.modules.idcf', ],
+    package_dir={
+        'ansible.modules.idcf': './modules/idcf',
+        'ansible.module_utils': './module_utils'
+    },
+    packages=[
+        'ansible.modules.idcf',
+        'ansible.module_utils'
+    ],
     install_requires=["ansible", ],
 )
