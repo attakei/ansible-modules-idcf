@@ -37,7 +37,6 @@ import time
 import hmac
 from base64 import b64encode
 from httplib import HTTPSConnection
-from . import DNSClient
 
 
 class IDCFAPiClient(object):
@@ -98,7 +97,7 @@ def main():
     }
     module = AnsibleModule(argument_spec=argument_spec)
     # Proceed
-    client = DNSClient(module.params['idcf_api_key'], module.params['idcf_secret_key'])
+    client = IDCFAPiClient(module.params['idcf_api_key'], module.params['idcf_secret_key'])
     zone = fetch_zone(client, module.params['name'])
 
     # No action

@@ -6,20 +6,16 @@ from os import path
 
 
 here = path.abspath(path.dirname(__file__))
-sys.path.append(here)
 
 with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
 
-import idcf
-
-
 setup(
     name="ansible-modules-idcf-dns",
-    version=idcf.__version__,
+    version="0.0.1.alpha",
 
-    description=idcf.__doc__,
+    description="Now writing",
     long_description=long_description,
     license="GPLv3",
     url="https://github.com/attakei/ansible-modules-idcf",
