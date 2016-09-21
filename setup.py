@@ -32,7 +32,7 @@ setup(
     ],
 
     package_dir={
-        'ansible.modules.idcf': './modules/idcf',
+        'ansible.modules.idcf': './modules',
         'ansible.module_utils': './module_utils'
     },
     packages=[

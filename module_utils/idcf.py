@@ -1,8 +1,6 @@
 # -*- coding:utf8 -*-
-"""Ansible module utils for IDCF-cloud
+"""Ansible module utility classes for IDCF-cloud
 """
-
-
 import time
 import hmac
 from base64 import b64encode
