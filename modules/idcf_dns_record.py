@@ -40,15 +40,6 @@ zone:
 '''
 
 
-def fetch_zone(client, zone_name):
-    resp = client.request('GET', '/zones')
-    zones = json.loads(resp.read())
-    for zone in zones:
-        if zone['name'] == zone_name:
-            return zone
-    return None
-
-
 def main():
     # Define module settings
     argument_spec = {
@@ -63,7 +54,7 @@ def main():
     module = AnsibleModule(argument_spec=argument_spec)
     # Proceed
     client = DNSClient(module.params['idcf_api_key'], module.params['idcf_secret_key'])
-    zone = fetch_zone(client, module.params['zone'])
+    zone = client.fetch_zone(module.params['zone'])
 
     if module.params['type'] not in ('A', ):
         module.fail_json(

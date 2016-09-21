@@ -42,3 +42,11 @@ class DNSClient(object):
             headers['Content-Type'] = 'application/json'
             conn.request(method, path, body=json.dumps(data), headers=headers)
         return conn.getresponse()
+
+    def fetch_zone(zone_name):
+        resp = self.request('GET', '/zones')
+        zones = json.loads(resp.read())
+        for zone in zones:
+            if zone['name'] == zone_name:
+                return zone
+        return None
