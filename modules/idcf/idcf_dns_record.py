@@ -107,6 +107,10 @@ def main():
     client = IDCFAPiClient(module.params['idcf_api_key'], module.params['idcf_secret_key'])
     zone = fetch_zone(client, module.params['zone'])
 
+    if module.params['type'] not in ('A', ):
+        module.fail_json(
+            msg='"{}" type is not supported.'.format(module.params['type'])
+        )
     # No action
     if zone is None:
         module.fail_json(msg='Zone is not found')
@@ -120,9 +124,13 @@ def main():
         record_domain = '{}.{}'.format(module.params['name'], module.params['zone'])
     record = None
     for record_ in zone_detail:
-        if record_['name'] == record_domain and record_['type'] == module.params['type']:
+        if record_['name'] == record_domain \
+        and record_['type'] == module.params['type'] \
+        and record_['content'] == module.params['content']:
             record = record_
             break
+    # On API record name
+    record_domain = '{}.{}'.format(module.params['name'], module.params['zone'])
 
     # No action
     if record is None and module.params['state'] == 'absent':
@@ -143,17 +151,7 @@ def main():
 
     # Updade record if params is changed
     if record is not None and module.params['state'] == 'present':
-        record_url = '{}/{}'.format(records_url, record['uuid'])
-        payload = {}
-        if module.params['content'] != record['content']:
-            payload['content'] = module.params['content']
-        if len(payload) == 0:
-            # Not changed
-            module.exit_json(changed=False, zone=zone, msg='Not changed')
-        resp = client.request('PUT', record_url, data=payload)
-        if resp.status != 200:
-            module.fail_json(status_code=resp.status, msg=resp.reason)
-        module.exit_json(changed=True, zone=json.loads(resp.read()))
+        module.exit_json(changed=False, zone={}, msg='Record is already exists.')
 
     # Delete current record
     if record is not None and module.params['state'] == 'absent':
