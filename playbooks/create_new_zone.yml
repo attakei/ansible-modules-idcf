@@ -1,0 +1,10 @@
+- hosts: localhost
+  connection: local
+  tasks:
+    - idcf_dns_zone: 
+        idcf_api_key: YOUR_API_KEY
+        idcf_secret_key: YOU_SECRET_KEY
+        name: example.com
+        email: example@example.com
+      register: result
+    - debug: var=result.zone
