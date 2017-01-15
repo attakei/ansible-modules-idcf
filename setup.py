@@ -13,7 +13,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
     name="ansible-modules-idcf-dns",
-    version="0.0.1.alpha",
+    version="0.0.1a2",
 
     description="Ansible modules for IDCF-cloud",
     long_description=long_description,
