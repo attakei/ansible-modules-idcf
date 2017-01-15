@@ -1,0 +1,23 @@
+- hosts: localhost
+  connection: local
+  vars:
+    YOUR_API_KEY: YOUR_API_KEY
+    YOUR_SECRET_KEY: YOUR_SECRET_KEY
+  tasks:
+    - idcf_dns_zone: 
+        idcf_api_key: '{{ YOUR_API_KEY }}'
+        idcf_secret_key: '{{ YOUR_SECRET_KEY }}'
+        name: example.com
+        email: attkei@gmail.com
+        state: present
+    - idcf_dns_record: 
+        idcf_api_key: '{{ YOUR_API_KEY }}'
+        idcf_secret_key: '{{ YOUR_SECRET_KEY }}'
+        zone: example.com
+        name: www
+        type: A
+        content: 127.0.0.1
+    - idcf_dns_zone_facts: 
+        idcf_api_key: '{{ YOUR_API_KEY }}'
+        idcf_secret_key: '{{ YOUR_SECRET_KEY }}'
+      register: result
